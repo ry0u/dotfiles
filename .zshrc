@@ -7,6 +7,7 @@ alias q='exit'
 alias qa='exit'
 alias e='gvim .zshrc'
 alias ls='ls -a --color=auto'
+alias grep='grep --color=auto'
 alias off='sudo poweroff'
 
 export ZSH=$HOME/.zplug/repos/robbyrussell/oh-my-zsh
