@@ -1,0 +1,170 @@
+set titlestring=Firefox
+set history=1000
+set hintchars=asdfghjklqwertyuiop
+
+" Tab
+noremap p <C-p>
+noremap n <C-n>
+noremap <C-p> p
+noremap <C-n> n
+
+" ブラウザ一覧
+nnoremap <C-r> :restart<CR>
+map o :open google 
+
+" VisualモードでC-gで選択しているテキストでGoogle検索
+vmap <silent> <C-g> y<Esc><Esc>p
+
+nnoremap ; :
+nnoremap : ;
+inoremap jj <ESC>
+noremap <C-a> i<C-a>
+inoremap <C-a> <insert><C-a><insert>
+
+"========================
+" colorscheme
+"========================
+hi Hint font-family: Arial; font-size: 21px; font-weight: bold; text-shadow: -1px -1px 2px black, 1px -1px 2px black, -1px 1px 2px black, 1px 1px 2px black; color: #33cccc;
+hi HintElem color: gray; background-color: #a1e4e6;
+hi HintActive color: black; background-color: #ff8700;
+hi ErrorMsg color:white; background-color: #ec6aa1;
+
+
+"========================
+" plugin
+"========================
+
+let g:plugin_loader_roots="~/.vimperator/vimperator-plugins"
+let g:plugin_loader_plugins = "proxy,copy,_smooziee"
+
+"========================
+" proxy
+"========================
+javascript <<EOM
+liberator.globalVariables.proxy_settings = [
+	{
+		conf_name: 'none',
+		conf_usage: 'direct connection',
+		settings: [
+			{
+				label: 'type',
+				param: 4
+			}
+		]
+	},
+	{
+		conf_name: 'kogakuin',
+		conf_usage: 'kogakuin proxy',
+		settings: [
+			{
+				label: 'type',
+				param: 1
+			},
+			{
+				label: 'http',
+				param: 'cache.ccs.kogakuin.ac.jp'
+			},
+			{
+				label: 'http_port',
+				param: 8080
+			}
+		]
+	}
+];
+EOM
+
+"========================
+" copy
+"========================
+javascript <<EOM
+(function () {
+	liberator.globalVariables.copy_templates = [
+		{ label: 'url',            value: '%URL%'},
+		{ label: 'titleAndURL',    value: '%TITLE%\n%URL%' },
+		{ label: 'markdown',       value: '[%TITLE%](%URL%)' },
+		{ label: 'title',          value: '%TITLE%' },
+		{ label: 'anchor',         value: '<a href="%URL%">%TITLE%</a>' },
+		{ label: 'selanchor',      value: '<a href="%URL%" title="%TITLE%">%SEL%</a>' },
+		{ label: 'amazon',   value: 'copy clean amazon url from current page',
+			custom: function() {
+				var m = content.document.location.pathname.match(/dp\/(\d+)/);
+				return m ? ('http://amazon.jp/dp/' + m[1]) : null;
+			}
+		},
+	];
+})();
+EOM
+
+
+"========================
+" _smooziee
+"========================
+let g:smooziee_scrool_amount=250
+let g:smooziee_scrool_interval=20
+
+" ===========================
+" color scheme
+" ===========================
+highlight Hint<<EOM
+    z-index: 2147483647;
+    margin-top: -4px;
+    margin-left: -10px;
+    padding 0px;
+    width: 1.5em;
+    line-height: 1.1em;
+    background: #333333;
+    box-shadow: 0 0 1px white, 4px 4px 5px black;
+    border-radius: 1em;
+    font-family: Arial;
+    font-size: 16px;
+    font-weight: bold;
+    color: #cccccc;
+    text-align: center;
+    opacity: 0.7;
+EOM
+
+highlight HintActive<<EOM
+    color: black;
+    background: rgba(231,123,131,0.6);
+    border-radius: 3px;
+EOM
+
+highlight HintElem<<EOM
+    color: #333333;
+    background: rgba(123,172,218,0.6);
+    border-radius: 3px;
+EOM
+
+highlight Normal<<EOM
+    color: #33FF33;
+    background: #333333;
+EOM
+
+highlight StatusLine<<EOM
+    background: #333333;
+    color: #33FF33;
+    font-weight: normal;
+EOM
+
+highlight CmdLine<<EOM
+    transition: all 0.25s;
+EOM
+
+highlight ErrorMsg<<EOM
+    color: white;
+    background: red;
+    font-weight: bold;
+EOM
+
+highlight WarningMsg<<EOM
+    color: red;
+EOM
+
+highlight CompTitle<<EOM
+    background: #252525;
+EOM
+
+highlight CompTitle>*<<EOM
+    color: #EEEE55;
+    text-shadow: 1px 1px 1px #DDDD44;
+EOM
